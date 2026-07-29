@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Alexey Tsoy — an aspiring Go developer." />
+  <title>Alexey Tsoy — Go Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain"></div>
+  <header class="topbar container">
+    <a class="logo" href="#home">AT<span>.</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#path">Journey</a>
+      <a href="#interests">Interests</a>
+    </nav>
+    <a class="status" href="#ai"><i></i> Llama online</a>
+  </header>
+
+  <main id="home">
+    <section class="hero container">
+      <p class="eyebrow">01 — PERSONAL SPACE</p>
+      <div class="hero-title">
+        <h1>Alexey<br><em>Tsoy</em></h1>
+        <p>An aspiring Senior developer.<br>Learning to build things that matter.</p>
+      </div>
+      <div class="hero-bottom">
+        <span>Almaty, Kazakhstan</span>
+        <a href="#about" class="round-link">↓</a>
+        <span>GO / SOFTWARE<br>DEVELOPMENT</span>
+      </div>
+    </section>
+
+    <section class="about container" id="about">
+      <p class="eyebrow">02 — ABOUT ME</p>
+      <div class="about-grid">
+        <h2>Writing my<br>future <em>in code.</em></h2>
+        <div>
+          <p class="lead">I enjoy understanding how technology works and turning ideas into products that actually work.</p>
+          <p>I am currently learning Go and developing my programming skills. I dedicate most of my free time to self-growth, new technologies, and hands-on practice.</p>
+          <div class="tags">
+            <span>Go</span>
+            <span>IT</span>
+            <span>Software Development</span>
+            <span>Self-growth</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="path" id="path">
+      <div class="container">
+        <p class="eyebrow">03 — MY PATH</p>
+        <div class="history">
+          <article>
+            <b>01</b>
+            <h3>Everything is experience</h3>
+            <p>Football, basketball, taekwondo, karate, Caucasian dance, mathematics, and guitar — every field taught me discipline and the value of consistent self-improvement.</p>
+          </article>
+          <article>
+            <b>02</b>
+            <h3>Now — Go</h3>
+            <p>I am focused on software development and Go: a concise, fast, and reliable tool for building future projects.</p>
+          </article>
+          <article>
+            <b>03</b>
+            <h3>Next — Senior</h3>
+            <p>My goal is to become a strong Senior developer, build meaningful projects, and grow in a great IT company in Kazakhstan or the United States.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="interests container" id="interests">
+      <p class="eyebrow">04 — OFFLINE MODE</p>
+      <div class="interests-grid">
+        <div>
+          <h2>Not just<br><em>code.</em></h2>
+          <p>Music, walks with friends, and TikTok videos help me reset and come back to new challenges with fresh ideas.</p>
+        </div>
+        <figure>
+          <img src="justin.jpg" alt="Justin Bieber">
+          <figcaption>Favourite artist —<br><strong>Justin Bieber</strong></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="ai-section container" id="ai">
+      <div class="ai-head">
+        <div>
+          <p class="eyebrow">05 — AI CORNER</p>
+          <h2>Ask <em>Llama.</em></h2>
+        </div>
+        <p>A personal assistant powered by Llama. It already knows the essentials about me — ask anything.</p>
+      </div>
+      <div class="chat-shell">
+        <div class="chat-top">
+          <span><i></i> Llama assistant</span>
+          <span class="mono">POWERED BY OLLAMA</span>
+        </div>
+        <div class="messages" id="messages">
+          <div class="message bot">Hi! I am Alexey's AI assistant. I can tell you about his skills, interests, and goals. What would you like to know?</div>
+        </div>
+        <form id="chat-form">
+          <input id="message-input" autocomplete="off" placeholder="Type a message..." maxlength="600">
+          <button aria-label="Send message" type="submit">↗</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© 2026 Alexey Tsoy</span>
+    <span class="mono">BUILT WITH GO + LLAMA</span>
+    <a href="#home">BACK TO TOP ↑</a>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
