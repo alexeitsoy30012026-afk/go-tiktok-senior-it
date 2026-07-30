@@ -131,6 +131,23 @@ http://localhost:8080
 
 После изменений в `index.html` или `style.css` просто нажми `F5` в браузере. После изменений в `main.go` останови сайт сочетанием `Ctrl + C` в терминале и снова выполни `go run .`.
 
+## AI-чат в интернете
+
+GitHub Pages умеет показывать только дизайн сайта. Чтобы AI-чат работал для всех людей, опубликуй весь Go-проект на Render и добавь в настройках Render секрет `GROQ_API_KEY`.
+
+1. Создай API-ключ на https://console.groq.com/keys. Никому не отправляй этот ключ и не добавляй его в GitHub.
+2. На Render создай **Web Service** из GitHub-репозитория.
+3. Укажи Build Command: `go build -tags netgo -ldflags '-s -w' -o app`.
+4. Укажи Start Command: `./app`.
+5. В Render открой `Environment` → `Add Environment Variable` и добавь:
+
+   ```text
+   Key: GROQ_API_KEY
+   Value: твой секретный ключ Groq
+   ```
+
+6. Нажми `Save Changes` и дождись нового Deploy. Открывай сайт по адресу Render, а не GitHub Pages.
+
 ## Если что-то не работает
 
 ### `go` is not recognized

@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -22,6 +23,23 @@ type ollamaRequest struct {
 
 type ollamaResponse struct {
 	Response string `json:"response"`
+}
+
+type groqMessage struct {
+	Role    string `json:"role"`
+	Content string `json:"content"`
+}
+
+type groqRequest struct {
+	Model       string        `json:"model"`
+	Messages    []groqMessage `json:"messages"`
+	Temperature float64       `json:"temperature"`
+}
+
+type groqResponse struct {
+	Choices []struct {
+		Message groqMessage `json:"message"`
+	} `json:"choices"`
 }
 
 type chatResponse struct {
@@ -56,6 +74,16 @@ func handleChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if apiKey := os.Getenv("GROQ_API_KEY"); apiKey != "" {
+		reply, err := askGroq(apiKey, input.Message)
+		if err == nil {
+			json.NewEncoder(w).Encode(chatResponse{Reply: reply})
+			return
+		}
+		json.NewEncoder(w).Encode(chatResponse{Reply: "The AI service is temporarily unavailable. Please try again in a moment."})
+		return
+	}
+
 	endpoint := os.Getenv("OLLAMA_URL")
 	if endpoint == "" {
 		endpoint = "http://localhost:11434/api/generate"
@@ -80,4 +108,42 @@ func handleChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	json.NewEncoder(w).Encode(chatResponse{Reply: result.Response})
+}
+
+func askGroq(apiKey, message string) (string, error) {
+	model := os.Getenv("GROQ_MODEL")
+	if model == "" {
+		model = "llama-3.3-70b-versatile"
+	}
+	payload, err := json.Marshal(groqRequest{
+		Model: model,
+		Messages: []groqMessage{
+			{Role: "system", Content: systemPrompt},
+			{Role: "user", Content: message},
+		},
+		Temperature: 0.7,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	request, err := http.NewRequest(http.MethodPost, "https://api.groq.com/openai/v1/chat/completions", bytes.NewReader(payload))
+	if err != nil {
+		return "", err
+	}
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer "+apiKey)
+
+	client := &http.Client{Timeout: 45 * time.Second}
+	response, err := client.Do(request)
+	if err != nil {
+		return "", err
+	}
+	defer response.Body.Close()
+
+	var result groqResponse
+	if response.StatusCode >= 300 || json.NewDecoder(response.Body).Decode(&result) != nil || len(result.Choices) == 0 || strings.TrimSpace(result.Choices[0].Message.Content) == "" {
+		return "", errors.New("invalid Groq response")
+	}
+	return result.Choices[0].Message.Content, nil
 }
