@@ -25,6 +25,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare Pages
         uses: actions/configure-pages@v5
+      - name: Remove old custom-domain configuration
+        run: rm -f CNAME static/CNAME
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
